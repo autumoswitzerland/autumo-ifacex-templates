@@ -1,0 +1,157 @@
+###############################################################################
+#
+#  Title: Technical Indicators - Relative Strength Index (RSI)
+#  Version: 1.0
+#
+#  Notes:
+#   Get the relative strength index (RSI) for a ticker symbol 
+#   over a given time range.
+#   
+#   API Docs: https://polygon.io/docs
+#
+#------------------------------------------------------------------------------
+#
+#  Author: autumo GmbH
+#  Date: Fri Nov 01 02:07:13 CET 2024
+#
+###############################################################################
+
+
+
+#-------- Reader ---------------------
+source_interface=rest_in
+
+
+#-------- Writers --------------------
+destination_interfaces=console_out
+
+
+#-------- Source Entities ------------
+process_source_entities=AAPL
+
+
+#-------- Overwritten Values ---------
+files_folder=files
+
+
+#-------- Reader: csv_in -------------
+csv_in_delete_files_after_processing=no
+csv_in_header_size=1
+csv_in_read_from_folder=
+csv_in_read_from_writer=csv_out
+
+
+#-------- Reader: json_in -------------
+json_in_*_absent_field_placeholder=
+json_in_*_allow_absent_fields=no
+json_in_*_data_path=
+json_in_*_field_path_access=no
+json_in_*_sub_path=
+json_in_delete_files_after_processing=no
+json_in_read_from_folder=
+json_in_read_from_writer=json_out
+
+
+#-------- Reader: db_in --------------
+db_in_*_fetchSize=
+db_in_AAPL_order_field=c
+db_in_password=
+db_in_url=
+db_in_user=
+
+
+#-------- Reader: mongo_in -----------
+mongo_in_*_fetchSize=
+mongo_in_AAPL_order_field=c
+mongo_in_db_name=
+mongo_in_host=
+mongo_in_params=
+mongo_in_password=
+mongo_in_protocol=mongodb
+mongo_in_user=
+
+
+#-------- Reader: rest_in ------------
+rest_in_*_absent_field_placeholder=
+rest_in_*_additional_headers=Authorization: Bearer <YOUR_TOKEN>
+rest_in_*_additional_params=timespan=day&adjusted=true&window=14&series_type=close&order=desc&limit=10
+rest_in_*_allow_absent_fields=yes
+rest_in_*_data_path=results.values
+rest_in_*_entities_url=/v1/indicators/rsi/
+rest_in_*_fetchSize=
+rest_in_*_field_path_access=no
+rest_in_*_pagination_after_id=
+rest_in_*_pagination_items_per_page=
+rest_in_*_pagination_items_total=
+rest_in_*_pagination_last_page=
+rest_in_*_pagination_path=
+rest_in_*_param_fetchSize=
+rest_in_*_param_offsetName=
+rest_in_*_param_pageName=
+rest_in_*_sub_path=
+rest_in_AAPL_fields=timestamp,value
+rest_in_api_key=<YOUR_OWN_API_KEY>
+rest_in_api_key_name=
+rest_in_auth_body=
+rest_in_auth_grant_type=
+rest_in_auth_host=
+rest_in_auth_method=none
+rest_in_auth_url=
+rest_in_host=api.polygon.io
+rest_in_password=<YOUR_OWN_PASSWORD>
+rest_in_port=443
+rest_in_protocol=https
+rest_in_user=<YOUR_OWN_USER>
+
+
+#-------- Writer: mail_out -----------
+mail_out_auth=no
+mail_out_body=
+mail_out_delete_files_after_processing=no
+mail_out_host=
+mail_out_password=
+mail_out_port=
+mail_out_subject=
+mail_out_tls_enable=no
+mail_out_to=
+mail_out_user=
+
+
+#-------- Writer: db_out -------------
+db_out_AAPL_dest_filter_fields=
+db_out_ext_insert_mapping=no
+db_out_password=<YOUR_OWN_PASSWORD>
+db_out_url=
+db_out_user=<YOUR_OWN_USER>
+
+
+#-------- Writer: rest_out -----------
+rest_out_*_entities_url=/
+rest_out_*_error_code=
+rest_out_*_error_code_value=
+rest_out_AAPL_dest_filter_fields=
+rest_out_api_key=
+rest_out_api_key_name=
+rest_out_auth_body=
+rest_out_auth_grant_type=
+rest_out_auth_host=
+rest_out_auth_method=none
+rest_out_auth_url=
+rest_out_host=
+rest_out_password=
+rest_out_port=443
+rest_out_protocol=https
+rest_out_single_id_filter=no
+rest_out_user=
+
+
+#-------- Writer: mongo_out ----------
+mongo_out_AAPL_dest_filter_fields=
+mongo_out_db_name=<YOUR_OWN_DB_NAME>
+mongo_out_host=<YOUR_OWN_HOST>
+mongo_out_params=
+mongo_out_password=<YOUR_OWN_PASSWORD>
+mongo_out_protocol=mongodb
+mongo_out_user=<YOUR_OWN_USER>
+
+
