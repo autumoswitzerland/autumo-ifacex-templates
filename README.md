@@ -18,4 +18,4 @@ Here you will find ifaceX Interface Processor Configuration (IPC) templates for:
 * Tingo
 * etc.
 
-The easiest way to view the templates is to load them into the [ifaceX Studio] (https://github.com/autumoswitzerland/autumo-ifacex-studio-public).
+The easiest way to view the templates is to load them into the [ifaceX Studio](https://github.com/autumoswitzerland/autumo-ifacex-studio-public).
