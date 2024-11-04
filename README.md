@@ -1,6 +1,6 @@
 # autumo ifaceX Template Set
 
-Here you will find ifaceX Interface Processor Configuration (IPC) templates for:
+Here you will find ifaceX Interface Processor Configuration (IPC) REST reader templates for:
 
 * CoinDesk
 * FinnHub
