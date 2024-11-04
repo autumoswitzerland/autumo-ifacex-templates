@@ -1,24 +1,17 @@
 ###############################################################################
 #
-#  Title: IEX Cloud - Financial Data: Sector & Performance
+#  Title: Market News
 #  Version: 1.0
 #
 #  Notes:
-#   API: https://iexcloud.io/docs/api/
+#   Get latest market news.
 #   
-#   IEX Cloud is an easy-to-use financial data platform that 
-#   makes a wide range of data accessible in one place. We 
-#   built IEX Cloud to make financial data accessible to everyone, 
-#   from individual developers to large businesses.  
-#   Get stock prices, fundamentals, forex data, crypto data, 
-#   and more all through a single API and a single IEX Cloud 
-#   subscription, with flexible plans designed to fit your use 
-#   case.
+#   API Docs: https://finnhub.io/docs/api
 #
 #------------------------------------------------------------------------------
 #
 #  Author: autumo GmbH
-#  Date: Thu Oct 31 22:31:15 CET 2024
+#  Date: Sat Nov 02 10:36:34 CET 2024
 #
 ###############################################################################
 
@@ -33,7 +26,11 @@ destination_interfaces=console_out
 
 
 #-------- Source Entities ------------
-process_source_entities=sector-performance
+process_source_entities=news
+
+
+#-------- Overwritten Values ---------
+files_folder=files
 
 
 #-------- Reader: csv_in -------------
@@ -56,6 +53,7 @@ json_in_read_from_writer=json_out
 
 #-------- Reader: db_in --------------
 db_in_*_fetchSize=
+db_in_news_order_field=exchange
 db_in_password=
 db_in_url=
 db_in_user=
@@ -65,6 +63,7 @@ db_in_user=
 mongo_in_*_fetchSize=
 mongo_in_db_name=
 mongo_in_host=
+mongo_in_news_order_field=exchange
 mongo_in_params=
 mongo_in_password=
 mongo_in_protocol=mongodb
@@ -74,10 +73,10 @@ mongo_in_user=
 #-------- Reader: rest_in ------------
 rest_in_*_absent_field_placeholder=
 rest_in_*_additional_headers=
-rest_in_*_additional_params=
-rest_in_*_allow_absent_fields=yes
-rest_in_*_data_path=FULLARRAY
-rest_in_*_entities_url=/stable/stock/market/
+rest_in_*_additional_params=category=general&apikey=YOUR_OWN_API_KEY
+rest_in_*_allow_absent_fields=no
+rest_in_*_data_path=.
+rest_in_*_entities_url=/api/v1/
 rest_in_*_fetchSize=
 rest_in_*_field_path_access=no
 rest_in_*_pagination_after_id=
@@ -89,18 +88,18 @@ rest_in_*_param_fetchSize=
 rest_in_*_param_offsetName=
 rest_in_*_param_pageName=
 rest_in_*_sub_path=
-rest_in_api_key=YOUR_OWN_API_KEY
-rest_in_api_key_name=token
+rest_in_api_key=
+rest_in_api_key_name=
 rest_in_auth_body=
 rest_in_auth_grant_type=
 rest_in_auth_host=
-rest_in_auth_method=apikey
+rest_in_auth_method=none
 rest_in_auth_url=
-rest_in_host=sandbox.iexapis.com
+rest_in_host=finnhub.io
+rest_in_news_fields=category,datetime,headline,id,image,related,source,summary,url
 rest_in_password=
-rest_in_port=
+rest_in_port=443
 rest_in_protocol=https
-rest_in_sector-performance_fields=type,name,performance,lastUpdated
 rest_in_user=
 
 
@@ -119,8 +118,8 @@ mail_out_user=
 
 #-------- Writer: db_out -------------
 db_out_ext_insert_mapping=no
+db_out_news_dest_filter_fields=
 db_out_password=
-db_out_sector-performance_dest_filter_fields=
 db_out_url=
 db_out_user=
 
@@ -137,21 +136,21 @@ rest_out_auth_host=
 rest_out_auth_method=none
 rest_out_auth_url=
 rest_out_host=
+rest_out_news_dest_filter_fields=
 rest_out_password=
 rest_out_port=
 rest_out_protocol=https
-rest_out_sector-performance_dest_filter_fields=
 rest_out_single_id_filter=no
 rest_out_user=
 
 
 #-------- Writer: mongo_out ----------
-mongo_out_db_name=YOUR_OWN_DB_NAME
+mongo_out_db_name=
 mongo_out_host=
+mongo_out_news_dest_filter_fields=
 mongo_out_params=
 mongo_out_password=
 mongo_out_protocol=mongodb
-mongo_out_sector-performance_dest_filter_fields=
 mongo_out_user=
 
 

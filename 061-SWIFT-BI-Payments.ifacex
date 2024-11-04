@@ -1,24 +1,19 @@
 ###############################################################################
 #
-#  Title: IEX Cloud - Financial Data: Sector & Performance
+#  Title: SWIFT - BI - Banking Analytics API -Payments
 #  Version: 1.0
 #
 #  Notes:
-#   API: https://iexcloud.io/docs/api/
+#   This API returns data of total messages sent and received 
+#   per market (payments, trade and treasury) and reporting 
+#   period.
 #   
-#   IEX Cloud is an easy-to-use financial data platform that 
-#   makes a wide range of data accessible in one place. We 
-#   built IEX Cloud to make financial data accessible to everyone, 
-#   from individual developers to large businesses.  
-#   Get stock prices, fundamentals, forex data, crypto data, 
-#   and more all through a single API and a single IEX Cloud 
-#   subscription, with flexible plans designed to fit your use 
-#   case.
+#   API: https://developer.swift.com/apis
 #
 #------------------------------------------------------------------------------
 #
 #  Author: autumo GmbH
-#  Date: Thu Oct 31 22:31:15 CET 2024
+#  Date: Sun Nov 03 02:17:04 CET 2024
 #
 ###############################################################################
 
@@ -29,11 +24,11 @@ source_interface=rest_in
 
 
 #-------- Writers --------------------
-destination_interfaces=console_out
+destination_interfaces=console_out,json_out
 
 
 #-------- Source Entities ------------
-process_source_entities=sector-performance
+process_source_entities=payments
 
 
 #-------- Reader: csv_in -------------
@@ -57,6 +52,7 @@ json_in_read_from_writer=json_out
 #-------- Reader: db_in --------------
 db_in_*_fetchSize=
 db_in_password=
+db_in_payments_order_field=banking_data.market
 db_in_url=
 db_in_user=
 
@@ -67,6 +63,7 @@ mongo_in_db_name=
 mongo_in_host=
 mongo_in_params=
 mongo_in_password=
+mongo_in_payments_order_field=banking_data.market
 mongo_in_protocol=mongodb
 mongo_in_user=
 
@@ -74,34 +71,34 @@ mongo_in_user=
 #-------- Reader: rest_in ------------
 rest_in_*_absent_field_placeholder=
 rest_in_*_additional_headers=
-rest_in_*_additional_params=
+rest_in_*_additional_params=reporting_period=2019-07-01
 rest_in_*_allow_absent_fields=yes
-rest_in_*_data_path=FULLARRAY
-rest_in_*_entities_url=/stable/stock/market/
-rest_in_*_fetchSize=
-rest_in_*_field_path_access=no
+rest_in_*_data_path=payment_data
+rest_in_*_entities_url=/bi/banking-premium/v1/
+rest_in_*_fetchSize=25
+rest_in_*_field_path_access=yes
 rest_in_*_pagination_after_id=
 rest_in_*_pagination_items_per_page=
 rest_in_*_pagination_items_total=
 rest_in_*_pagination_last_page=
 rest_in_*_pagination_path=
-rest_in_*_param_fetchSize=
-rest_in_*_param_offsetName=
+rest_in_*_param_fetchSize=limit
+rest_in_*_param_offsetName=offset
 rest_in_*_param_pageName=
-rest_in_*_sub_path=
-rest_in_api_key=YOUR_OWN_API_KEY
-rest_in_api_key_name=token
-rest_in_auth_body=
-rest_in_auth_grant_type=
-rest_in_auth_host=
-rest_in_auth_method=apikey
-rest_in_auth_url=
-rest_in_host=sandbox.iexapis.com
-rest_in_password=
+rest_in_*_sub_path=banking_data
+rest_in_api_key=
+rest_in_api_key_name=
+rest_in_auth_body=username:sandbox-id|password:sandbox-key
+rest_in_auth_grant_type=password
+rest_in_auth_host=sandbox.swift.com
+rest_in_auth_method=oauth-ba
+rest_in_auth_url=/oauth2/v1/token;/oauth2/v1/revoke
+rest_in_host=sandbox.swift.com
+rest_in_password=YOUR_OWN_PASSWORD
+rest_in_payments_fields=market,reporting_period,delivery_status.code,my_institution.id.any_bic,counterparty.id.any_bic,counterparty.country.code,geo_route.code,customer_route.code,transactions_sent,transactions_received,currency.code,amount_sent.original,amount_sent.us_dollar,amount_sent.euro,amount_received.original,amount_received.us_dollar,amount_received.euro
 rest_in_port=
 rest_in_protocol=https
-rest_in_sector-performance_fields=type,name,performance,lastUpdated
-rest_in_user=
+rest_in_user=YOUR_OWN_USER
 
 
 #-------- Writer: mail_out -----------
@@ -120,7 +117,7 @@ mail_out_user=
 #-------- Writer: db_out -------------
 db_out_ext_insert_mapping=no
 db_out_password=
-db_out_sector-performance_dest_filter_fields=
+db_out_payments_dest_filter_fields=
 db_out_url=
 db_out_user=
 
@@ -138,20 +135,20 @@ rest_out_auth_method=none
 rest_out_auth_url=
 rest_out_host=
 rest_out_password=
+rest_out_payments_dest_filter_fields=
 rest_out_port=
 rest_out_protocol=https
-rest_out_sector-performance_dest_filter_fields=
 rest_out_single_id_filter=no
 rest_out_user=
 
 
 #-------- Writer: mongo_out ----------
-mongo_out_db_name=YOUR_OWN_DB_NAME
+mongo_out_db_name=
 mongo_out_host=
 mongo_out_params=
 mongo_out_password=
+mongo_out_payments_dest_filter_fields=
 mongo_out_protocol=mongodb
-mongo_out_sector-performance_dest_filter_fields=
 mongo_out_user=
 
 

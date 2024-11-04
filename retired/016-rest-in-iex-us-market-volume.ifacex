@@ -89,7 +89,7 @@ rest_in_*_param_fetchSize=
 rest_in_*_param_offsetName=
 rest_in_*_param_pageName=
 rest_in_*_sub_path=
-rest_in_api_key=<YOUR_OWN_API_KEY>
+rest_in_api_key=YOUR_OWN_API_KEY
 rest_in_api_key_name=token
 rest_in_auth_body=
 rest_in_auth_grant_type=
@@ -97,10 +97,10 @@ rest_in_auth_host=
 rest_in_auth_method=apikey
 rest_in_auth_url=
 rest_in_host=sandbox.iexapis.com
-rest_in_password=<YOUR_OWN_PASSWORD>
+rest_in_password=
 rest_in_port=
 rest_in_protocol=https
-rest_in_user=<YOUR_OWN_USER>
+rest_in_user=
 rest_in_volume_fields=mic,tapeId,venueName,tapeA,tapeB,tapeC,marketPercent,lastUpdated
 
 
@@ -119,9 +119,9 @@ mail_out_user=
 
 #-------- Writer: db_out -------------
 db_out_ext_insert_mapping=no
-db_out_password=<YOUR_OWN_PASSWORD>
+db_out_password=
 db_out_url=
-db_out_user=<YOUR_OWN_USER>
+db_out_user=
 db_out_volume_dest_filter_fields=
 
 
@@ -146,12 +146,12 @@ rest_out_volume_dest_filter_fields=
 
 
 #-------- Writer: mongo_out ----------
-mongo_out_db_name=<YOUR_OWN_DB_NAME>
-mongo_out_host=<YOUR_OWN_HOST>
+mongo_out_db_name=YOUR_OWN_DB_NAME
+mongo_out_host=
 mongo_out_params=
-mongo_out_password=<YOUR_OWN_PASSWORD>
+mongo_out_password=
 mongo_out_protocol=mongodb
-mongo_out_user=<YOUR_OWN_USER>
+mongo_out_user=
 mongo_out_volume_dest_filter_fields=
 
 

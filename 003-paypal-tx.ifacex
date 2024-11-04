@@ -1,24 +1,18 @@
 ###############################################################################
 #
-#  Title: IEX Cloud - Financial Data: Sector & Performance
+#  Title: PayPal REST API - Transactions
 #  Version: 1.0
 #
 #  Notes:
-#   API: https://iexcloud.io/docs/api/
+#   NOTE: Fill in your own User/Client ID and Password/Secret
+#   (REST Reader).
 #   
-#   IEX Cloud is an easy-to-use financial data platform that 
-#   makes a wide range of data accessible in one place. We 
-#   built IEX Cloud to make financial data accessible to everyone, 
-#   from individual developers to large businesses.  
-#   Get stock prices, fundamentals, forex data, crypto data, 
-#   and more all through a single API and a single IEX Cloud 
-#   subscription, with flexible plans designed to fit your use 
-#   case.
+#   API Doc: https://developer.paypal.com/docs/api/overview
 #
 #------------------------------------------------------------------------------
 #
 #  Author: autumo GmbH
-#  Date: Thu Oct 31 22:31:15 CET 2024
+#  Date: Tue Nov 05 00:02:16 CET 2024
 #
 ###############################################################################
 
@@ -29,11 +23,11 @@ source_interface=rest_in
 
 
 #-------- Writers --------------------
-destination_interfaces=console_out
+destination_interfaces=csv_out
 
 
 #-------- Source Entities ------------
-process_source_entities=sector-performance
+process_source_entities=transactions
 
 
 #-------- Reader: csv_in -------------
@@ -57,6 +51,7 @@ json_in_read_from_writer=json_out
 #-------- Reader: db_in --------------
 db_in_*_fetchSize=
 db_in_password=
+db_in_transactions_order_field=transaction_id
 db_in_url=
 db_in_user=
 
@@ -68,40 +63,51 @@ mongo_in_host=
 mongo_in_params=
 mongo_in_password=
 mongo_in_protocol=mongodb
+mongo_in_transactions_order_field=transaction_id
 mongo_in_user=
 
 
 #-------- Reader: rest_in ------------
 rest_in_*_absent_field_placeholder=
 rest_in_*_additional_headers=
-rest_in_*_additional_params=
+rest_in_*_additional_params=start_date=2024-01-01T00:00:00Z&end_date=2024-02-01T00:00:00Z
 rest_in_*_allow_absent_fields=yes
-rest_in_*_data_path=FULLARRAY
-rest_in_*_entities_url=/stable/stock/market/
+rest_in_*_data_path=transaction_details
+rest_in_*_entities_url=/v1/reporting/
 rest_in_*_fetchSize=
 rest_in_*_field_path_access=no
 rest_in_*_pagination_after_id=
 rest_in_*_pagination_items_per_page=
-rest_in_*_pagination_items_total=
-rest_in_*_pagination_last_page=
-rest_in_*_pagination_path=
-rest_in_*_param_fetchSize=
+rest_in_*_pagination_items_total=total_items
+rest_in_*_pagination_last_page=total_pages
+rest_in_*_pagination_path=.
+rest_in_*_param_fetchSize=page_size
 rest_in_*_param_offsetName=
-rest_in_*_param_pageName=
-rest_in_*_sub_path=
-rest_in_api_key=YOUR_OWN_API_KEY
-rest_in_api_key_name=token
+rest_in_*_param_pageName=page
+rest_in_*_sub_path=transaction_info
+rest_in_alt_data_conn=no
+rest_in_api_key=
+rest_in_api_key_name=
 rest_in_auth_body=
-rest_in_auth_grant_type=
-rest_in_auth_host=
-rest_in_auth_method=apikey
-rest_in_auth_url=
-rest_in_host=sandbox.iexapis.com
-rest_in_password=
+rest_in_auth_grant_type=client_credentials
+rest_in_auth_host=api.paypal.com
+rest_in_auth_method=oauth-ba
+rest_in_auth_url=/v1/oauth2/token
+rest_in_host=api.paypal.com
+rest_in_password=YOUR_OWN_PASSWORD
 rest_in_port=
 rest_in_protocol=https
-rest_in_sector-performance_fields=type,name,performance,lastUpdated
-rest_in_user=
+rest_in_transactions_fields=transaction_id,transaction_updated_date,transaction_status,transaction_amount,invoice_id
+rest_in_user=YOUR_OWN_USER
+
+
+#-------- Writer: csv_out ------------
+csv_out_transactions_mapping_entity=TX
+csv_out_transactions_mapping_field_000=transaction_id:{transaction_id}
+csv_out_transactions_mapping_field_001=transaction_updated_date:{transaction_updated_date}
+csv_out_transactions_mapping_field_002=transaction_status:{transaction_status}
+csv_out_transactions_mapping_field_003=transaction_amount:{transaction_amount}
+csv_out_transactions_mapping_field_004=invoice_id:{invoice_id}
 
 
 #-------- Writer: mail_out -----------
@@ -120,7 +126,7 @@ mail_out_user=
 #-------- Writer: db_out -------------
 db_out_ext_insert_mapping=no
 db_out_password=
-db_out_sector-performance_dest_filter_fields=
+db_out_transactions_dest_filter_fields=
 db_out_url=
 db_out_user=
 
@@ -140,18 +146,18 @@ rest_out_host=
 rest_out_password=
 rest_out_port=
 rest_out_protocol=https
-rest_out_sector-performance_dest_filter_fields=
 rest_out_single_id_filter=no
+rest_out_transactions_dest_filter_fields=
 rest_out_user=
 
 
 #-------- Writer: mongo_out ----------
-mongo_out_db_name=YOUR_OWN_DB_NAME
+mongo_out_db_name=
 mongo_out_host=
 mongo_out_params=
 mongo_out_password=
 mongo_out_protocol=mongodb
-mongo_out_sector-performance_dest_filter_fields=
+mongo_out_transactions_dest_filter_fields=
 mongo_out_user=
 
 
