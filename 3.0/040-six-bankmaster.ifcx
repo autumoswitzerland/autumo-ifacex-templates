@@ -1,0 +1,104 @@
+###############################################################################
+#
+#  Title: SIX - Bank Master
+#  Version: 1.0
+#
+#  Notes:
+#   Bank Master
+#   
+#   API: https://api.six-group.com/api/epcd/bankmaster/v2/public
+#   
+#   The Download Bank Master in Text, Excel or JSON format is an extract of the
+#   daily updated Swiss Bank Master.
+#
+#------------------------------------------------------------------------------
+#
+#  Author: autumo GmbH
+#  Date: Wed Oct 28 23:51:13 CET 2026
+#
+###############################################################################
+
+formatVersion: 1
+
+general: {}
+
+#-------- Reader ---------------------
+sourceInterface: rest_in
+
+#-------- Writers --------------------
+destinationInterfaces:
+  - console_out
+  - csv_out
+
+#-------- Source Entities ------------
+processSourceEntities:
+  - bankmaster/v3/bankmaster.json
+
+sources:
+  - name: rest_in
+
+    params:
+      host: api.six-group.com
+      protocol: https
+      port: ""
+      user: ""
+      password: ""
+      api_key: ""
+      api_key_name: ""
+      auth_method: none
+      auth_url: ""
+      auth_host: ""
+      auth_grant_type: ""
+      auth_body: ""
+      alt_data_conn: "no"
+
+    defaults:
+      entities_url: /api/epcd/
+      data_path: entries
+      sub_path: ""
+      query: ""
+      field_path_access: "no"
+      allow_absent_fields: "yes"
+      absent_field_placeholder: ""
+      additional_headers: ""
+      additional_params: ""
+      fetchSize: ""
+      param_pageName: ""
+      param_offsetName: ""
+      param_fetchSize: ""
+      pagination_path: ""
+      pagination_items_per_page: ""
+      pagination_items_total: ""
+      pagination_last_page: ""
+      pagination_after_id: ""
+
+    entities:
+      bankmaster/v3/bankmaster.json:
+        fields:
+          - group
+          - iid
+          - branchId
+          - sicIid
+          - headOffice
+          - iidType
+          - validSince
+          - sicParticipation
+          - euroSicParticipation
+          - language
+          - shortName
+          - bankOrInstitutionName
+          - domicileAddress
+          - postalAddress
+          - zipCode
+          - place
+          - phone
+          - countryCode
+          - postalAccount
+
+destinations:
+  - name: console_out
+
+    entities:
+      bankmaster/v3/bankmaster.json: {}
+
+  - name: csv_out

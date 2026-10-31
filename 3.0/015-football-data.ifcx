@@ -1,0 +1,87 @@
+###############################################################################
+#
+#  Title: The dev-friendly football API
+#  Version: 1.0
+#
+#  Notes:
+#   API: https://www.football-data.org/documentation/api
+#   
+#   football-data.org provides football data and statistics (live scores,
+#   fixtures, tables, squads, lineups/subs, etc.) in a machine-readable way.
+#
+#------------------------------------------------------------------------------
+#
+#  Author: autumo GmbH
+#  Date: Wed Oct 28 20:55:01 CET 2026
+#
+###############################################################################
+
+formatVersion: 1
+
+general: {}
+
+#-------- Reader ---------------------
+sourceInterface: rest_in
+
+#-------- Writers --------------------
+destinationInterfaces:
+  - console_out
+
+#-------- Source Entities ------------
+processSourceEntities:
+  - competitions
+
+sources:
+  - name: rest_in
+
+    params:
+      host: api.football-data.org
+      protocol: https
+      port: ""
+      user: ""
+      password: ""
+      api_key: ""
+      api_key_name: ""
+      auth_method: none
+      auth_url: ""
+      auth_host: ""
+      auth_grant_type: ""
+      auth_body: ""
+      alt_data_conn: "no"
+
+    defaults:
+      entities_url: /v4/
+      data_path: competitions
+      sub_path: ""
+      query: ""
+      field_path_access: "yes"
+      allow_absent_fields: "yes"
+      absent_field_placeholder: "<EMPTY>"
+      additional_headers: ""
+      additional_params: ""
+      fetchSize: ""
+      param_pageName: ""
+      param_offsetName: ""
+      param_fetchSize: ""
+      pagination_path: ""
+      pagination_items_per_page: ""
+      pagination_items_total: ""
+      pagination_last_page: ""
+      pagination_after_id: ""
+
+    entities:
+      competitions:
+        fields:
+          - id
+          - name
+          - plan
+          - area.name
+          - currentSeason.startDate
+          - currentSeason.endDate
+          - numberOfAvailableSeasons
+
+destinations:
+  - name: console_out
+
+    entities:
+      competitions: {}

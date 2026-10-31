@@ -1,0 +1,101 @@
+###############################################################################
+#
+#  Title: PayPal REST API - Transactions
+#  Version: 1.0
+#
+#  Notes:
+#   API: https://developer.paypal.com/docs/api/overview
+#
+#------------------------------------------------------------------------------
+#
+#  Author: autumo GmbH
+#  Date: Wed Oct 28 19:58:13 CET 2026
+#
+###############################################################################
+
+formatVersion: 1
+
+general: {}
+
+#-------- Reader ---------------------
+sourceInterface: rest_in
+
+#-------- Writers --------------------
+destinationInterfaces:
+  - csv_out
+
+#-------- Source Entities ------------
+processSourceEntities:
+  - transactions
+
+sources:
+  - name: rest_in
+
+    params:
+      host: api-m.sandbox.paypal.com
+      protocol: https
+      port: ""
+      user: YOUR_OWN_USER
+      password: YOUR_OWN_PASSWORD
+      api_key: ""
+      api_key_name: ""
+      auth_method: oauth-ba
+      auth_url: /v1/oauth2/token
+      auth_host: api-m.sandbox.paypal.com
+      auth_grant_type: client_credentials
+      auth_body: ""
+      alt_data_conn: "no"
+
+    defaults:
+      entities_url: /v1/reporting/
+      data_path: transaction_details
+      sub_path: transaction_info
+      query: ""
+      field_path_access: "no"
+      allow_absent_fields: "yes"
+      absent_field_placeholder: ""
+      additional_headers: ""
+      additional_params: "start_date=2026-09-28T00:00:00Z&end_date=2026-10-28T00:00:00Z"
+      fetchSize: ""
+      param_pageName: page
+      param_offsetName: ""
+      param_fetchSize: page_size
+      pagination_path: .
+      pagination_items_per_page: ""
+      pagination_items_total: total_items
+      pagination_last_page: total_pages
+      pagination_after_id: ""
+
+    entities:
+      transactions:
+        fields:
+          - transaction_id
+          - transaction_updated_date
+          - transaction_status
+          - transaction_amount
+          - invoice_id
+
+destinations:
+  - name: csv_out
+
+    entities:
+      transactions:
+        data_mapper_class: ""
+        mapping_entity: TX
+
+        mapping:
+          - field: transaction_id
+            formula: "{transaction_id}"
+            insert: false
+          - field: transaction_updated_date
+            formula: "{transaction_updated_date}"
+            insert: false
+          - field: transaction_status
+            formula: "{transaction_status}"
+            insert: false
+          - field: transaction_amount
+            formula: "{transaction_amount}"
+            insert: false
+          - field: invoice_id
+            formula: "{invoice_id}"
+            insert: false

@@ -1,0 +1,100 @@
+###############################################################################
+#
+#  Title: SWIFT - BI - Banking Analytics API -Payments
+#  Version: 1.0
+#
+#  Notes:
+#   This API returns data of total messages sent and received per market
+#   (payments, trade and treasury) and reporting period.
+#   
+#   API: https://developer.swift.com/apis
+#
+#------------------------------------------------------------------------------
+#
+#  Author: autumo GmbH
+#  Date: Wed Oct 28 23:58:20 CET 2026
+#
+###############################################################################
+
+formatVersion: 1
+
+general: {}
+
+#-------- Reader ---------------------
+sourceInterface: rest_in
+
+#-------- Writers --------------------
+destinationInterfaces:
+  - console_out
+  - json_out
+
+#-------- Source Entities ------------
+processSourceEntities:
+  - payments
+
+sources:
+  - name: rest_in
+
+    params:
+      host: sandbox.swift.com
+      protocol: https
+      port: ""
+      user: YOUR_OWN_USER
+      password: YOUR_OWN_PASSWORD
+      api_key: ""
+      api_key_name: ""
+      auth_method: oauth-ba
+      auth_url: /oauth2/v1/token;/oauth2/v1/revoke
+      auth_host: sandbox.swift.com
+      auth_grant_type: password
+      auth_body: "username:sandbox-id|password:sandbox-key"
+      alt_data_conn: "no"
+
+    defaults:
+      entities_url: /bi/banking-premium/v1/
+      data_path: payment_data
+      sub_path: banking_data
+      query: ""
+      field_path_access: "yes"
+      allow_absent_fields: "yes"
+      absent_field_placeholder: ""
+      additional_headers: ""
+      additional_params: reporting_period=2019-07-01
+      fetchSize: "25"
+      param_pageName: ""
+      param_offsetName: offset
+      param_fetchSize: limit
+      pagination_path: ""
+      pagination_items_per_page: ""
+      pagination_items_total: ""
+      pagination_last_page: ""
+      pagination_after_id: ""
+
+    entities:
+      payments:
+        fields:
+          - market
+          - reporting_period
+          - delivery_status.code
+          - my_institution.id.any_bic
+          - counterparty.id.any_bic
+          - counterparty.country.code
+          - geo_route.code
+          - customer_route.code
+          - transactions_sent
+          - transactions_received
+          - currency.code
+          - amount_sent.original
+          - amount_sent.us_dollar
+          - amount_sent.euro
+          - amount_received.original
+          - amount_received.us_dollar
+          - amount_received.euro
+
+destinations:
+  - name: console_out
+
+    entities:
+      payments: {}
+
+  - name: json_out

@@ -1,0 +1,180 @@
+###############################################################################
+#
+#  Title: National Vulnerability Database by NIST - CVE API - Vulnerabilities
+#  Version: 1.0
+#
+#  Notes:
+#   API: https://nvd.nist.gov/developers/vulnerabilities
+#   
+#   The CVE API is used to easily retrieve information on a single CVE or a
+#   collection of CVE from the NVD. The NVD contains 207,187 CVE records.
+#   Because of this, its APIs enforce offset- based pagination to answer
+#   requests for large collections. Through a series of smaller
+#   \u201Cchunked\u201D responses controlled by an offset startIndex and a page
+#   limit resultsPerPage users may page through all the CVE in the NVD.
+#   
+#   Try it out manually: https://nvd.nist.gov/vuln/search
+#
+#------------------------------------------------------------------------------
+#
+#  Author: autumo GmbH
+#  Date: Wed Oct 28 23:48:40 CET 2026
+#
+###############################################################################
+
+formatVersion: 1
+
+#-------- Overwritten Values ---------
+general:
+  files_folder: files
+  rest_timeout: "20"
+
+#-------- Reader ---------------------
+sourceInterface: rest_in
+
+#-------- Writers --------------------
+destinationInterfaces:
+  - csv_out
+  - console_out
+
+#-------- Source Entities ------------
+processSourceEntities:
+  - "*:apache:log4j:2.15.0"
+  - "*:fasterxml:jackson-databind:2.13.4"
+
+sources:
+  - name: rest_in
+
+    params:
+      host: services.nvd.nist.gov
+      protocol: https
+      port: ""
+      user: ""
+      password: ""
+      api_key: ""
+      api_key_name: ""
+      auth_method: none
+      auth_url: ""
+      auth_host: ""
+      auth_grant_type: ""
+      auth_body: ""
+      alt_data_conn: "no"
+
+    defaults:
+      entities_url: "/rest/json/cves/2.0?virtualMatchString=cpe:2.3:"
+      data_path: vulnerabilities
+      sub_path: ""
+      query: ""
+      field_path_access: "yes"
+      allow_absent_fields: "yes"
+      absent_field_placeholder: ""
+      additional_headers: ""
+      additional_params: ""
+      fetchSize: "20"
+      param_pageName: ""
+      param_offsetName: startIndex
+      param_fetchSize: resultsPerPage
+      pagination_path: .
+      pagination_items_per_page: resultsPerPage
+      pagination_items_total: totalResults
+      pagination_last_page: ""
+      pagination_after_id: ""
+
+    entities:
+      "*:apache:log4j:2.15.0":
+        fields:
+          - cve.id
+          - cve.vulnStatus
+          - cve.lastModified
+          - "cve.descriptions[0].value"
+          - "cve.metrics.cvssMetricV31[0].cvssData.attackVector"
+          - "cve.metrics.cvssMetricV31[0].cvssData.baseSeverity"
+          - "cve.metrics.cvssMetricV31[0].cvssData.attackComplexity"
+          - "cve.weaknesses[0].type"
+          - "cve.weaknesses[0].description[0].value"
+      "*:fasterxml:jackson-databind:2.13.4":
+        fields:
+          - cve.id
+          - cve.vulnStatus
+          - cve.lastModified
+          - "cve.descriptions[0].value"
+          - "cve.metrics.cvssMetricV31[0].cvssData.attackVector"
+          - "cve.metrics.cvssMetricV31[0].cvssData.baseSeverity"
+          - "cve.metrics.cvssMetricV31[0].cvssData.attackComplexity"
+          - "cve.weaknesses[0].type"
+          - "cve.weaknesses[0].description[0].value"
+
+destinations:
+  - name: csv_out
+
+    entities:
+      "*:apache:log4j:2.15.0":
+        data_mapper_class: ""
+        mapping_entity: apache_log4j_2.15.0
+
+        mapping:
+          - field: ID
+            formula: "{cve.id}"
+            insert: false
+          - field: Status
+            formula: "{cve.vulnStatus}"
+            insert: false
+          - field: Last Modified
+            formula: "{cve.lastModified}"
+            insert: false
+          - field: Description
+            formula: "{cve.descriptions[0].value}"
+            insert: false
+          - field: Attack Vector
+            formula: "{cve.metrics.cvssMetricV31[0].cvssData.attackVector}"
+            insert: false
+          - field: Base Severity
+            formula: "{cve.metrics.cvssMetricV31[0].cvssData.baseSeverity}"
+            insert: false
+          - field: Attack Complexity
+            formula: "{cve.metrics.cvssMetricV31[0].cvssData.attackComplexity}"
+            insert: false
+          - field: Type
+            formula: "{cve.weaknesses[0].type}"
+            insert: false
+          - field: Weakness
+            formula: "{cve.weaknesses[0].description[0].value}"
+            insert: false
+      "*:fasterxml:jackson-databind:2.13.4":
+        data_mapper_class: ""
+        mapping_entity: fasterxml_jackson-databind_2.13.4
+
+        mapping:
+          - field: ID
+            formula: "{cve.id}"
+            insert: false
+          - field: Status
+            formula: "{cve.vulnStatus}"
+            insert: false
+          - field: Last Modified
+            formula: "{cve.lastModified}"
+            insert: false
+          - field: Description
+            formula: "{cve.descriptions[0].value}"
+            insert: false
+          - field: Attack Vector
+            formula: "{cve.metrics.cvssMetricV31[0].cvssData.attackVector}"
+            insert: false
+          - field: Base Severity
+            formula: "{cve.metrics.cvssMetricV31[0].cvssData.baseSeverity}"
+            insert: false
+          - field: Attack Complexity
+            formula: "{cve.metrics.cvssMetricV31[0].cvssData.attackComplexity}"
+            insert: false
+          - field: Type
+            formula: "{cve.weaknesses[0].type}"
+            insert: false
+          - field: Weakness
+            formula: "{cve.weaknesses[0].description[0].value}"
+            insert: false
+
+  - name: console_out
+
+    entities:
+      "*:apache:log4j:2.15.0": {}
+      "*:fasterxml:jackson-databind:2.13.4": {}

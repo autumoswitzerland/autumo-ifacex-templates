@@ -1,0 +1,104 @@
+###############################################################################
+#
+#  Title: Tickers Details (v3)
+#  Version: 1.0
+#
+#  Notes:
+#   Get a single ticker supported by Polygon.io. This response will have
+#   detailed information about the ticker and the company behind it.
+#   
+#   API Docs: https://polygon.io/docs
+#
+#------------------------------------------------------------------------------
+#
+#  Author: autumo GmbH
+#  Date: Wed Oct 28 21:30:18 CET 2026
+#
+###############################################################################
+
+formatVersion: 1
+
+general: {}
+
+#-------- Reader ---------------------
+sourceInterface: rest_in
+
+#-------- Writers --------------------
+destinationInterfaces:
+  - console_out
+
+#-------- Source Entities ------------
+processSourceEntities:
+  - AAPL
+
+sources:
+  - name: rest_in
+
+    params:
+      host: api.polygon.io
+      protocol: https
+      port: ""
+      user: ""
+      password: ""
+      api_key: YOUR_OWN_API_KEY
+      api_key_name: apiKey
+      auth_method: apikey
+      auth_url: ""
+      auth_host: ""
+      auth_grant_type: ""
+      auth_body: ""
+      alt_data_conn: "no"
+
+    defaults:
+      entities_url: /v3/reference/tickers/
+      data_path: results
+      sub_path: ""
+      query: ""
+      field_path_access: "no"
+      allow_absent_fields: "yes"
+      absent_field_placeholder: ""
+      additional_headers: ""
+      additional_params: ""
+      fetchSize: ""
+      param_pageName: ""
+      param_offsetName: ""
+      param_fetchSize: ""
+      pagination_path: ""
+      pagination_items_per_page: ""
+      pagination_items_total: ""
+      pagination_last_page: ""
+      pagination_after_id: ""
+
+    entities:
+      AAPL:
+        fields:
+          - active
+          - address
+          - cik
+          - composite_figi
+          - currency_name
+          - description
+          - homepage_url
+          - list_date
+          - locale
+          - market
+          - market_cap
+          - name
+          - phone_number
+          - primary_exchange
+          - round_lot
+          - share_class_figi
+          - share_class_shares_outstanding
+          - sic_code
+          - sic_description
+          - ticker
+          - ticker_root
+          - total_employees
+          - type
+          - weighted_shares_outstanding
+
+destinations:
+  - name: console_out
+
+    entities:
+      AAPL: {}

@@ -1,0 +1,112 @@
+###############################################################################
+#
+#  Title: SWIFT - BI - Banking Premium Analytics API - Trades
+#  Version: 1.0
+#
+#  Notes:
+#   This API returns daily data on number of messages and amount sent and
+#   received with additional granularity of payload details from the messages
+#   with SWIFT totals information.
+#   
+#   API: https://developer.swift.com/apis
+#
+#------------------------------------------------------------------------------
+#
+#  Author: autumo GmbH
+#  Date: Wed Oct 28 23:59:08 CET 2026
+#
+###############################################################################
+
+formatVersion: 1
+
+general: {}
+
+#-------- Reader ---------------------
+sourceInterface: rest_in
+
+#-------- Writers --------------------
+destinationInterfaces:
+  - console_out
+  - json_out
+
+#-------- Source Entities ------------
+processSourceEntities:
+  - trade
+
+sources:
+  - name: rest_in
+
+    params:
+      host: sandbox.swift.com
+      protocol: https
+      port: ""
+      user: YOUR_OWN_USER
+      password: YOUR_OWN_PASSWORD
+      api_key: ""
+      api_key_name: ""
+      auth_method: oauth-ba
+      auth_url: /oauth2/v1/token;/oauth2/v1/revoke
+      auth_host: sandbox.swift.com
+      auth_grant_type: password
+      auth_body: "username:sandbox-id|password:sandbox-key"
+      alt_data_conn: "no"
+
+    defaults:
+      entities_url: /bi/banking-premium/v1/
+      data_path: trade_data
+      sub_path: .
+      query: ""
+      field_path_access: "yes"
+      allow_absent_fields: "yes"
+      absent_field_placeholder: ""
+      additional_headers: ""
+      additional_params: reporting_period=2019-07-01
+      fetchSize: "25"
+      param_pageName: ""
+      param_offsetName: offset
+      param_fetchSize: limit
+      pagination_path: ""
+      pagination_items_per_page: ""
+      pagination_items_total: ""
+      pagination_last_page: ""
+      pagination_after_id: ""
+
+    entities:
+      trade:
+        fields:
+          - banking_data.market
+          - banking_data.reporting_period
+          - banking_data.delivery_status.code
+          - banking_data.my_institution.id.any_bic
+          - banking_data.counterparty.id.any_bic
+          - banking_data.counterparty.country.code
+          - banking_data.geo_route.code
+          - banking_data.customer_route.code
+          - banking_data.transactions_sent
+          - banking_data.transactions_received
+          - banking_data.total_swift_transactions_sent
+          - banking_data.total_swift_transactions_received
+          - banking_data.currency.code
+          - banking_data.amount_sent.original
+          - banking_data.amount_sent.us_dollar
+          - banking_data.amount_sent.euro
+          - banking_data.amount_received.original
+          - banking_data.amount_received.us_dollar
+          - banking_data.amount_received.euro
+          - banking_data.total_swift_amount_sent.original
+          - banking_data.total_swift_amount_sent.us_dollar
+          - banking_data.total_swift_amount_sent.euro
+          - banking_data.total_swift_amount_received.original
+          - banking_data.total_swift_amount_received.us_dollar
+          - banking_data.total_swift_amount_received.euro
+          - trade_data.applicant_bank_bic8.any_bic
+          - trade_data.standard_value_bucket_eur
+          - trade_data.standard_value_bucket_usd
+
+destinations:
+  - name: console_out
+
+    entities:
+      trade: {}
+
+  - name: json_out

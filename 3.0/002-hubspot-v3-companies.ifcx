@@ -1,0 +1,126 @@
+###############################################################################
+#
+#  Title: HubSpot API - V3 Companies
+#  Version: 1.0
+#
+#  Notes:
+#   This API calls a Hubspot private app with a pre-generated token.
+#   
+#   Note: The Hubsport V3 authentication is not an OAuth authentication, even
+#   they specify it this way. The authorization call includes a pre-generated
+#   bearer token within the header and it makes the data call in the 1st
+#   request. There's no authentication request beforehand!
+#   
+#   API: https://developers.hubspot.com/docs/api/crm/companies
+#
+#------------------------------------------------------------------------------
+#
+#  Author: autumo GmbH
+#  Date: Wed Oct 28 19:48:22 CET 2026
+#
+###############################################################################
+
+formatVersion: 1
+
+general: {}
+
+#-------- Reader ---------------------
+sourceInterface: rest_in
+
+#-------- Writers --------------------
+destinationInterfaces:
+  - console_out
+  - csv_out
+
+#-------- Source Entities ------------
+processSourceEntities:
+  - companies
+
+sources:
+  - name: rest_in
+
+    params:
+      host: api.hubapi.com
+      protocol: https
+      port: ""
+      user: ""
+      password: ""
+      api_key: ""
+      api_key_name: ""
+      auth_method: none
+      auth_url: ""
+      auth_host: api.hubapi.com
+      auth_grant_type: ""
+      auth_body: ""
+      alt_data_conn: "no"
+
+    defaults:
+      entities_url: /crm/v3/objects/
+      data_path: results
+      sub_path: ""
+      query: ""
+      field_path_access: "yes"
+      allow_absent_fields: "yes"
+      absent_field_placeholder: ""
+      additional_headers: "Authorization: Bearer YOUR_TOKEN"
+      additional_params: "properties=hs_object_id,name,website,phone,address,zip,city,country"
+      fetchSize: "100"
+      param_pageName: ""
+      param_offsetName: ""
+      param_fetchSize: limit
+      pagination_path: paging.next
+      pagination_items_per_page: ""
+      pagination_items_total: ""
+      pagination_last_page: ""
+      pagination_after_id: after
+
+    entities:
+      companies:
+        fields:
+          - properties.hs_object_id
+          - properties.name
+          - properties.website
+          - properties.phone
+          - properties.address
+          - properties.zip
+          - properties.city
+          - properties.country
+
+destinations:
+  - name: csv_out
+
+    entities:
+      companies:
+        data_mapper_class: ""
+        mapping_entity: companies
+
+        mapping:
+          - field: properties.hs_object_id
+            formula: "{properties.hs_object_id}"
+            insert: false
+          - field: properties.name
+            formula: "{properties.name}"
+            insert: false
+          - field: properties.website
+            formula: "{properties.website}"
+            insert: false
+          - field: properties.phone
+            formula: "{properties.phone}"
+            insert: false
+          - field: properties.address
+            formula: "{properties.address}"
+            insert: false
+          - field: properties.zip
+            formula: "{properties.zip}"
+            insert: false
+          - field: properties.city
+            formula: "{properties.city}"
+            insert: false
+          - field: properties.country
+            formula: "{properties.country}"
+            insert: false
+
+  - name: console_out
+
+    entities:
+      companies: {}

@@ -1,0 +1,91 @@
+###############################################################################
+#
+#  Title: Exchanges
+#  Version: 1.0
+#
+#  Notes:
+#   List all exchanges that Polygon.io knows about.
+#   
+#   API Docs: https://polygon.io/docs
+#
+#------------------------------------------------------------------------------
+#
+#  Author: autumo GmbH
+#  Date: Wed Oct 28 21:12:20 CET 2026
+#
+###############################################################################
+
+formatVersion: 1
+
+#-------- Overwritten Values ---------
+general:
+  files_folder: files
+
+#-------- Reader ---------------------
+sourceInterface: rest_in
+
+#-------- Writers --------------------
+destinationInterfaces:
+  - console_out
+
+#-------- Source Entities ------------
+processSourceEntities:
+  - exchanges
+
+sources:
+  - name: rest_in
+
+    params:
+      host: api.polygon.io
+      protocol: https
+      port: "443"
+      user: ""
+      password: ""
+      api_key: YOUR_OWN_API_KEY
+      api_key_name: apiKey
+      auth_method: apikey
+      auth_url: ""
+      auth_host: ""
+      auth_grant_type: ""
+      auth_body: ""
+      alt_data_conn: "no"
+
+    defaults:
+      entities_url: /v3/reference/
+      data_path: results
+      sub_path: ""
+      query: ""
+      field_path_access: "no"
+      allow_absent_fields: "yes"
+      absent_field_placeholder: ""
+      additional_headers: ""
+      additional_params: ""
+      fetchSize: ""
+      param_pageName: ""
+      param_offsetName: ""
+      param_fetchSize: ""
+      pagination_path: ""
+      pagination_items_per_page: ""
+      pagination_items_total: ""
+      pagination_last_page: ""
+      pagination_after_id: ""
+
+    entities:
+      exchanges:
+        fields:
+          - acronym
+          - asset_class
+          - id
+          - locale
+          - mic
+          - name
+          - operating_mic
+          - participant_id
+          - type
+          - url
+
+destinations:
+  - name: console_out
+
+    entities:
+      exchanges: {}

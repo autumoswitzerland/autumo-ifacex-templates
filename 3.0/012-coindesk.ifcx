@@ -1,0 +1,81 @@
+###############################################################################
+#
+#  Title: Condesk Ticks
+#  Version: 1.0
+#
+#  Notes:
+#   API: https://developers.coindesk.com/
+#   
+#   CoinDesk's market-leading API provides institutional-grade digital asset
+#   data, streamed live from 300+ exchanges and covering 300,000+ currency
+#   pairs.
+#
+#------------------------------------------------------------------------------
+#
+#  Author: 
+#  Date: 
+#
+###############################################################################
+
+formatVersion: 1
+
+general: {}
+
+sourceInterface: rest_in
+
+destinationInterfaces:
+  - console_out
+
+processSourceEntities:
+  - tick
+
+sources:
+  - name: rest_in
+
+    params:
+      host: data-api.coindesk.com
+      protocol: https
+      port: ""
+      user: ""
+      password: ""
+      api_key: YOUR_OWN_API_KEY
+      api_key_name: api_key
+      auth_method: apikey
+      auth_url: ""
+      auth_host: ""
+      auth_grant_type: ""
+      auth_body: ""
+      alt_data_conn: "no"
+
+    defaults:
+      entities_url: /index/cc/v1/latest/
+      data_path: Data
+      sub_path: BTC-USD
+      query: ""
+      field_path_access: "no"
+      allow_absent_fields: "no"
+      absent_field_placeholder: ""
+      additional_headers: ""
+      additional_params: "market=cadli&instruments=BTC-USD&apply_mapping=true"
+      fetchSize: ""
+      param_pageName: ""
+      param_offsetName: ""
+      param_fetchSize: ""
+      pagination_path: ""
+      pagination_items_per_page: ""
+      pagination_items_total: ""
+      pagination_last_page: ""
+      pagination_after_id: ""
+
+    entities:
+      tick:
+        fields:
+          - TYPE
+          - MARKET
+          - INSTRUMENT
+
+destinations:
+  - name: console_out
+
+    entities:
+      tick: {}

@@ -1,0 +1,96 @@
+###############################################################################
+#
+#  Title: Thomson Reuters Open Permid - ODM entities
+#  Version: 1.0
+#
+#  Notes:
+#   NOTE: Fill in your own API Key (REST Reader)
+#   
+#   API Doc:
+#   https://developers.refinitiv.com/content/dam/devportal/api-families/open-permid/permid-entity-search/documentation/permid-apis-user-guide-apr-2020.pdf
+#   
+#   Data has more potential value when it can be shared or opened. It can be
+#   used by a number of different stakeholders and partners, within or outside
+#   an organization, for a variety of applications to gain new analytical
+#   insight and to build new products and services. And in order to effectively
+#   use data, it's important to understand how it connects to the real world.
+#   That's why Thomson Reuters is making available its Permanent Identifiers, or
+#   PermIDs, and the associated entity masters and metadata to the market.
+#   PermIDs are open, permanent and universal identifiers where underlying
+#   attributes capture the context of the identity they each represent.
+#
+#------------------------------------------------------------------------------
+#
+#  Author: autumo GmbH
+#  Date: Wed Oct 28 20:32:28 CET 2026
+#
+###############################################################################
+
+formatVersion: 1
+
+general: {}
+
+#-------- Reader ---------------------
+sourceInterface: rest_in
+
+#-------- Writers --------------------
+destinationInterfaces:
+  - console_out
+
+#-------- Source Entities ------------
+processSourceEntities:
+  - search
+
+sources:
+  - name: rest_in
+
+    params:
+      host: api-eit.refinitiv.com
+      protocol: https
+      port: ""
+      user: ""
+      password: ""
+      api_key: YOUR_OWN_API_KEY
+      api_key_name: access-token
+      auth_method: apikey
+      auth_url: ""
+      auth_host: ""
+      auth_grant_type: ""
+      auth_body: ""
+      alt_data_conn: "no"
+
+    defaults:
+      entities_url: /permid/
+      data_path: result.organizations.entities
+      sub_path: ""
+      query: ""
+      field_path_access: "no"
+      allow_absent_fields: "yes"
+      absent_field_placeholder: ""
+      additional_headers: ""
+      additional_params: q=apple
+      fetchSize: ""
+      param_pageName: ""
+      param_offsetName: ""
+      param_fetchSize: ""
+      pagination_path: ""
+      pagination_items_per_page: ""
+      pagination_items_total: ""
+      pagination_last_page: ""
+      pagination_after_id: ""
+
+    entities:
+      search:
+        fields:
+          - "@id"
+          - organizationName
+          - primaryTicker
+          - orgSubtype
+          - hasHoldingClassification
+          - hasURL
+
+destinations:
+  - name: console_out
+
+    entities:
+      search: {}

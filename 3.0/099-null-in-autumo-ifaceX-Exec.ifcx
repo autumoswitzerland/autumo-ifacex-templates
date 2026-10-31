@@ -1,0 +1,48 @@
+###############################################################################
+#
+#  Title: autumo iFaceX configuration 'Exec'
+#  Version: 1.0
+#
+#  Notes:
+#   Example for running an external process.
+#
+#------------------------------------------------------------------------------
+#
+#  Author: autumo GmbH
+#  Date: Thu Oct 29 00:01:26 CET 2026
+#
+###############################################################################
+
+formatVersion: 1
+
+#-------- Overwritten Values ---------
+general:
+  batch_mode: serial
+
+#-------- Reader ---------------------
+sourceInterface: null_in
+
+#-------- Writers --------------------
+destinationInterfaces:
+  - exec
+
+#-------- Source Entities ------------
+processSourceEntities:
+  - Dummy
+
+sources:
+  - name: null_in
+
+    entities:
+      Dummy: {}
+
+destinations:
+  - name: exec
+
+    params:
+      cmd: /Volumes/Fastdrive/Applications/autumo/autumo-ifaceX-3.0.0/bin/run.sh
+      args: ""
+      working_dir: ""
+      timeout: "60"
+      proc_pos: "0"
+      exit_code_success: "0"

@@ -1,0 +1,87 @@
+###############################################################################
+#
+#  Title: Forex - Current Top-of-Book
+#  Version: 1.0
+#
+#  Notes:
+#   Tiingo connects directly to tier-1 banks and FX dark pools to provide
+#   institutional-grade quality Forex quotes.
+#   
+#   API Docs: https://www.tiingo.com/documentation
+#
+#------------------------------------------------------------------------------
+#
+#  Author: autumo GmbH
+#  Date: Wed Oct 28 22:11:11 CET 2026
+#
+###############################################################################
+
+formatVersion: 1
+
+general: {}
+
+#-------- Reader ---------------------
+sourceInterface: rest_in
+
+#-------- Writers --------------------
+destinationInterfaces:
+  - console_out
+
+#-------- Source Entities ------------
+processSourceEntities:
+  - fx/top
+
+sources:
+  - name: rest_in
+
+    params:
+      host: api.tiingo.com
+      protocol: https
+      port: ""
+      user: ""
+      password: ""
+      api_key: YOUR_OWN_API_KEY
+      api_key_name: token
+      auth_method: apikey
+      auth_url: ""
+      auth_host: ""
+      auth_grant_type: ""
+      auth_body: ""
+      alt_data_conn: "yes"
+
+    defaults:
+      entities_url: /tiingo/
+      data_path: .
+      sub_path: ""
+      query: ""
+      field_path_access: "no"
+      allow_absent_fields: "no"
+      absent_field_placeholder: ""
+      additional_headers: ""
+      additional_params: "tickers=audusd,eurusd"
+      fetchSize: ""
+      param_pageName: ""
+      param_offsetName: ""
+      param_fetchSize: ""
+      pagination_path: ""
+      pagination_items_per_page: ""
+      pagination_items_total: ""
+      pagination_last_page: ""
+      pagination_after_id: ""
+
+    entities:
+      fx/top:
+        fields:
+          - ticker
+          - quoteTimestamp
+          - bidPrice
+          - bidSize
+          - askPrice
+          - askSize
+          - midPrice
+
+destinations:
+  - name: console_out
+
+    entities:
+      fx/top: {}

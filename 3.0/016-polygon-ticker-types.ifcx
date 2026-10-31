@@ -1,0 +1,86 @@
+###############################################################################
+#
+#  Title: Tickers Types
+#  Version: 1.0
+#
+#  Notes:
+#   Get the most recent news articles relating to a stock ticker symbol,
+#   including a summary of the article and a link to the original source.
+#   
+#   API Docs: https://polygon.io/docs
+#
+#------------------------------------------------------------------------------
+#
+#  Author: autumo GmbH
+#  Date: Wed Oct 28 21:31:15 CET 2026
+#
+###############################################################################
+
+formatVersion: 1
+
+#-------- Overwritten Values ---------
+general:
+  files_folder: files
+
+#-------- Reader ---------------------
+sourceInterface: rest_in
+
+#-------- Writers --------------------
+destinationInterfaces:
+  - console_out
+
+#-------- Source Entities ------------
+processSourceEntities:
+  - types
+
+sources:
+  - name: rest_in
+
+    params:
+      host: api.polygon.io
+      protocol: https
+      port: "443"
+      user: ""
+      password: ""
+      api_key: YOUR_OWN_API_KEY
+      api_key_name: apiKey
+      auth_method: apikey
+      auth_url: ""
+      auth_host: ""
+      auth_grant_type: ""
+      auth_body: ""
+      alt_data_conn: "no"
+
+    defaults:
+      entities_url: /v3/reference/tickers/
+      data_path: results.events
+      sub_path: ""
+      query: ""
+      field_path_access: "no"
+      allow_absent_fields: "yes"
+      absent_field_placeholder: ""
+      additional_headers: ""
+      additional_params: ""
+      fetchSize: ""
+      param_pageName: ""
+      param_offsetName: ""
+      param_fetchSize: ""
+      pagination_path: ""
+      pagination_items_per_page: ""
+      pagination_items_total: ""
+      pagination_last_page: ""
+      pagination_after_id: ""
+
+    entities:
+      types:
+        fields:
+          - asset_class
+          - code
+          - description
+          - locale
+
+destinations:
+  - name: console_out
+
+    entities:
+      types: {}
